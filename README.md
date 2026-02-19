@@ -130,3 +130,44 @@ accelerate launch switch_finetune.py --num_processes=8
 
 * Training logs and checkpoints will be saved according to paths specified inside `switch_finetune.py`.
 
+## Quantized Inference on Finetuned Switch Transformer Model
+
+After finetuning the pretrained Switch Transformer model, you can perform quantized inference using the script below.
+
+### Example Command
+
+```bash
+python evaluate_quantized_switch_model.py \
+  --high_bit_level 3 \
+  --low_bit_level 2 \
+  --num_low_bit_experts 32 \
+  --num_high_bit_experts 32 \
+  --order_type combined
+```
+
+### Arguments
+
+* `--high_bit_level` : Bit precision assigned to high-bit experts.
+* `--low_bit_level` : Bit precision assigned to low-bit experts.
+* `--num_low_bit_experts` : Number of experts quantized to the lower bit level.
+* `--num_high_bit_experts` : Number of experts quantized to the higher bit level.
+* `--order_type` : Expert quantization ordering strategy (e.g., `combined`).
+
+### Output
+
+The script evaluates the quantized finetuned Switch Transformer model and reports task-specific performance metrics for the chosen quantization configuration.
+
+## Citation
+
+If you find this repository useful, please cite the following paper:
+
+```bibtex
+@inproceedings{
+chowdhury2026efficient,
+title={Efficient Quantization of Mixture-of-Experts with Theoretical Generalization Guarantees},
+author={Mohammed Nowaz Rabbani Chowdhury and Kaoutar El Maghraoui and Hsinyu Tsai and Naigang Wang and Geoffrey W. Burr and Liu Liu and Meng Wang},
+booktitle={The Fourteenth International Conference on Learning Representations},
+year={2026},
+url={https://openreview.net/forum?id=yiMlVBAoQi}
+}
+```
