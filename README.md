@@ -73,3 +73,33 @@ python quantize_mixtral.py \
 The quantized Mixtral checkpoint is saved to the directory specified by `--saving_path`.
 This checkpoint can be used for downstream evaluation or inference with the LM Evaluation Harness.
 
+## Inference on Quantized Mixtral Model
+
+After quantizing and saving the Mixtral checkpoint, you can run downstream evaluation using the LM Evaluation Harness.
+
+### Example Command
+
+```bash
+lm_eval --model hf \
+  --tasks piqa,boolq,arc_challenge,arc_easy,hellaswag,winogrande,mmlu,mathqa \
+  --model_args pretrained='quantized_ckpts/2p0',parallelize=True,quantized=True,dtype='float16' \
+  --batch_size 32
+```
+
+### Arguments
+
+* `--model hf` : Uses the Hugging Face model interface.
+* `--tasks` : Comma-separated list of evaluation tasks.
+* `--model_args` :
+
+  * `pretrained` : Path to the quantized checkpoint directory.
+  * `parallelize=True` : Enables multi-GPU inference (if available).
+  * `quantized=True` : Loads the model in quantized mode.
+  * `dtype='float16'` : Sets computation precision.
+* `--batch_size` : Batch size for evaluation.
+
+### Output
+
+The command reports task-wise evaluation metrics (e.g., accuracy) and overall aggregated performance of the quantized Mixtral model.
+
+
