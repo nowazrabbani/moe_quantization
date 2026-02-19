@@ -102,4 +102,31 @@ lm_eval --model hf \
 
 The command reports task-wise evaluation metrics (e.g., accuracy) and overall aggregated performance of the quantized Mixtral model.
 
+## Finetuning Pretrained Switch Transformer Model
+
+Use the following command to finetune a pretrained Switch Transformer model using distributed training with 🤗 Accelerate.
+
+### Example Command
+
+```bash
+accelerate launch switch_finetune.py --num_processes=8
+```
+
+### Arguments
+
+* `accelerate launch` : Launches distributed training using the Hugging Face Accelerate framework.
+* `switch_finetune.py` : Finetuning script for the pretrained Switch Transformer model.
+* `--num_processes` : Number of GPU processes to use for training (set according to available GPUs).
+
+### Notes
+
+* Ensure Accelerate is configured before running:
+
+  ```bash
+  accelerate config
+  ```
+
+* Set `--num_processes` equal to the number of GPUs available on your system.
+
+* Training logs and checkpoints will be saved according to paths specified inside `switch_finetune.py`.
 
